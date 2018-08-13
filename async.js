@@ -6,18 +6,21 @@ const randomNumber = () => {
 }
 
 // 1. Make it wait for 1 sec. with `setTimeout` and log it on main function
-const timeoutRandomNumber = () => {
-
+const timeoutRandomNumber = (func) => {
+  setTimeout(func, 1000);
 }
 
 // 2. Now wrap the timeout version to work with promises
-const promiseRandomNumber = () => {
-
-}
+const promiseRandomNumber = (callback) => {
+  let promisedRnd = new Promise((rseolve, reject) => {
+    setTimeout(callback, 1000);
+  });
+  promisedRnd.then(() => callback);
+};
 
 // 3. Finally, code a final version with async await.
-const asyncRandomNumber = () => {
-
+const asyncRandomNumber = async (callback) => {
+  await setTimeout(callback, 1000);
 }
 
 const rangedRandomNumber = (base, min, max) => {
@@ -29,6 +32,9 @@ const main = () => {
   console.log(rangedRandomNumber(rnd, 14, 42));
 
   // log rnd…
+  timeoutRandomNumber(() => console.log(rnd));
+  promiseRandomNumber(() => console.log(rnd));
+  asyncRandomNumber(() => console.log(rnd));
 }
 
 main();
